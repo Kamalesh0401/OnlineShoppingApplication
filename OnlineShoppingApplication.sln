@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34221.43
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "microservices", "microservices", "{393E43E0-4572-460D-9254-E1D98A7D53FF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "apiGateWay", "apiGateWay", "{CBBE8FCA-5F16-46B5-B18A-DF2E650FBB2A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Availability", "Availability\Availability.csproj", "{63C78B5B-F197-43A5-B648-2FDD7D488D4E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{63C78B5B-F197-43A5-B648-2FDD7D488D4E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{63C78B5B-F197-43A5-B648-2FDD7D488D4E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{63C78B5B-F197-43A5-B648-2FDD7D488D4E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{63C78B5B-F197-43A5-B648-2FDD7D488D4E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{63C78B5B-F197-43A5-B648-2FDD7D488D4E} = {393E43E0-4572-460D-9254-E1D98A7D53FF}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D4A3AB5A-F556-4538-AD99-CF840C300914}
+	EndGlobalSection
+EndGlobal
