@@ -1,6 +1,8 @@
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+builder.Services.AddScoped<Master.Services.Interfaces.IInventoryService, Master.Services.InventoryService>();
+builder.Services.AddScoped<Master.Services.Data.IInventoryRepository, Master.Services.Data.InventoryRepository>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

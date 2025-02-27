@@ -7,7 +7,11 @@ namespace Master.Services.Data
 {
     public interface IProductRepository
     {
-        Task<List<ProductObject>> GetAllProductsAsync(ProductObject input);
+        Task<List<ProductObject>> GetAllProductsAsync(ProductInputObject input);
+        Task<List<ProductObject>> GetProductsByIdAsync(ProductInputObject input);
+        Task<List<ProductObject>> GetProductsByCategoryIdAsync(ProductInputObject input);
         Task<OperationStatus> AddProductAsync(ProductObject input);
+        Task<OperationStatus> UpdateProductByIdAsync(ProductObject input);
+        Task<OperationStatus> DeleteProductByIdAsync(ProductObject input);
     }
 }
