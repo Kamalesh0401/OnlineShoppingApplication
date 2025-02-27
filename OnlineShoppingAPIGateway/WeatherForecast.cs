@@ -1,4 +1,4 @@
-namespace InventoryAvailability
+namespace OnlineShoppingAPIGateway
 {
     public class WeatherForecast
     {
