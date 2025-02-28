@@ -30,10 +30,10 @@ namespace Master.Controllers
             return await this._service.RegisterUser(this.GetSessionInfo(), input).ConfigureAwait(false);
         }
         
-        [HttpPost("UpdateAvailabilityByProductId")]
-        public async Task<OperationStatus> UpdateAvailabilityByProductId([FromBody] UserObject input)
+        [HttpPost("LoginUser")]
+        public async Task<OperationStatus> LoginUser(string userID, string userPassword)
         {
-            return await this._service.UpdateAvailabilityByProductId(this.GetSessionInfo(), input).ConfigureAwait(false);
+            return await this._service.LoginUser(this.GetSessionInfo(), input).ConfigureAwait(false);
         }
         
     }

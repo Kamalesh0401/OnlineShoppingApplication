@@ -42,25 +42,24 @@ namespace Master.Services.Data
             }
             return output;
         }
-        public async Task<OperationStatus> UpdateAvailabilityByProductIdAsync(UserObject input)
+        public async Task<OperationStatus> LoginUserAsync(string userID, string userPassword)
         {
             var output = new OperationStatus();
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
-                    string sql = @"UPDATE invntry_dtls SET stock_aval=@stock_aval,mod_by_usr_cd=@mod_by_usr_cd,mod_dttm=GETDATE WHERE invnry_id=@invnry_id AND prod_id = @prod_id;";
-                    int rowsAffected = await connection.ExecuteAsync(sql, input);
+                    string sql = @"SELECT usr_id,usr_name,usr_role,pass_word FROM user_dtls WHERE usr_id=@usr_id";
 
-                    output.IsSuccess = true;
-                    output.Message = "Data updated successfully";
+                    var user = await connection.QueryAsync<UserObject>(sql, new { usr_id = userID });
+                    output.Data = user;
                 }
             }
             catch (Exception ex)
             {
                 output.IsSuccess = false;
                 output.Message = "Something went wrong";
-
+                output.Data = null;
             }
             return output;
         }

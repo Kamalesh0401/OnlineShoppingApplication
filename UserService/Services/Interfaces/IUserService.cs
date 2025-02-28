@@ -6,6 +6,6 @@ namespace Master.Services.Interfaces
     public interface IUserService
     {
         Task<OperationStatus> RegisterUser(SessionInfo sessionInfo, UserObject input);
-        Task<OperationStatus> UpdateAvailabilityByProductId(SessionInfo sessionInfo, UserObject input);
+        Task<OperationStatus> LoginUser(SessionInfo sessionInfo, string userID, string userPassword);
     }
 }
