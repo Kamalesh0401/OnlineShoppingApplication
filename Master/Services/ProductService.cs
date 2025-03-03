@@ -19,6 +19,14 @@ namespace Master.Services
 
         #endregion
 
+        #region Private Methods
+
+
+
+
+
+        #endregion
+
         #region Public Methods
 
         public async Task<List<ProductObject>> GetAllProduct(SessionInfo sessionInfo, ProductInputObject input)

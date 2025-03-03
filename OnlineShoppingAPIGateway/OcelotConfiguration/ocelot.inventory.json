@@ -1,0 +1,8 @@
+{
+  "DownstreamPathTemplate": "/Inventory/{everything}",
+  "DownstreamScheme": "https",
+  "ServiceName": "InventoryService",
+  "SwaggerKey": "InventoryService",
+  "UpstreamPathTemplate": "/inventory-gate/{everything}",
+  "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+}

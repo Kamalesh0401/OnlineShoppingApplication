@@ -27,7 +27,7 @@ namespace Master.Services.Data
                 {
                     // Replace with your actual SQL query and parameters
                     string sql = @"INSERT INTO user_dtls(usr_id,usr_name,email,pass_word,usr_role,created_at)
-                               VALUES(@usr_id,@usr_name,@email,@pass_word,@usr_role,@created_at)";
+                               VALUES(@usr_id,@usr_name,@email,@pass_word,@usr_role,GETDATE())";
                     int rowsAffected = await connection.ExecuteAsync(sql, input);
 
                     output.IsSuccess = true;
@@ -42,17 +42,26 @@ namespace Master.Services.Data
             }
             return output;
         }
-        public async Task<OperationStatus> LoginUserAsync(string userID, string userPassword)
+        public async Task<OperationStatus<UserObject>> LoginUserAsync(string userID, string userPassword)
         {
-            var output = new OperationStatus();
+            var output = new OperationStatus<UserObject>();
             try
             {
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     string sql = @"SELECT usr_id,usr_name,usr_role,pass_word FROM user_dtls WHERE usr_id=@usr_id";
 
-                    var user = await connection.QueryAsync<UserObject>(sql, new { usr_id = userID });
-                    output.Data = user;
+                    var users = await connection.QueryAsync<UserObject>(sql, new { usr_id = userID });
+                    var user = users.FirstOrDefault();
+                    if (user != null)
+                    {
+                        output.Data = user;
+                    }
+                    else
+                    {
+                        output.Data = null;
+                    }
+                    //output.Data = (UserObject)user;
                 }
             }
             catch (Exception ex)

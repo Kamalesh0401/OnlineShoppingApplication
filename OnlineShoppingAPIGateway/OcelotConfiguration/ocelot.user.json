@@ -1,0 +1,8 @@
+{
+  "DownstreamPathTemplate": "/user/{everything}",
+  "DownstreamScheme": "https",
+  "ServiceName": "UserService",
+  "SwaggerKey": "UserService",
+  "UpstreamPathTemplate": "/user-gate/{everything}",
+  "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+}

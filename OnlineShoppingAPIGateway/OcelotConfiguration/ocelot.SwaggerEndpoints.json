@@ -1,0 +1,36 @@
+{
+  "SwaggerEndPoints": [
+    {
+      "Key": "ProductService",
+      "Config": {
+        "Name": "Product Service",
+        "Version": "v1",
+        "Url": "https://localhost:7001/swagger/v1/swagger.json"
+      }
+    },
+    {
+      "Key": "InventoryService",
+      "Config": {
+        "Name": "Inventory Service",
+        "Version": "v1",
+        "Url": "https://localhost:7120/swagger/v1/swagger.json"
+      }
+    },
+    {
+      "Key": "PriceService",
+      "Config": {
+        "Name": "Price Service",
+        "Version": "v1",
+        "Url": "https://localhost:7248/swagger/v1/swagger.json"
+      }
+    },
+    {
+      "Key": "UserService",
+      "Config": {
+        "Name": "User Service",
+        "Version": "v1",
+        "Url": "https://localhost:7233/swagger/v1/swagger.json"
+      }
+    }
+  ]
+}

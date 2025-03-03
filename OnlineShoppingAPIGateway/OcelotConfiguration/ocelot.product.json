@@ -1,0 +1,8 @@
+{
+  "DownstreamPathTemplate": "/Product/{everything}",
+  "DownstreamScheme": "https",
+  "ServiceName": "ProductService",
+  "SwaggerKey": "ProductService",
+  "UpstreamPathTemplate": "/product-gate/{everything}",
+  "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+}

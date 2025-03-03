@@ -31,9 +31,9 @@ namespace Master.Controllers
         }
         
         [HttpPost("LoginUser")]
-        public async Task<OperationStatus> LoginUser(string userID, string userPassword)
+        public async Task<OperationStatus<string>> LoginUser(string userID, string userPassword)
         {
-            return await this._service.LoginUser(this.GetSessionInfo(), input).ConfigureAwait(false);
+            return await this._service.LoginUser(this.GetSessionInfo(), userID, userPassword).ConfigureAwait(false);
         }
         
     }

@@ -8,6 +8,6 @@ namespace Master.Services.Data
     public interface IUserRepository
     {
         Task<OperationStatus> RegisterUserAsync(UserObject input);
-        Task<OperationStatus> LoginUserAsync(string userID, string userPassword);
+        Task<OperationStatus<UserObject>> LoginUserAsync(string userID, string userPassword);
     }
 }

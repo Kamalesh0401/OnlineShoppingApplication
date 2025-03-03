@@ -5,6 +5,8 @@ using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.Security.Claims;
 using System.Text;
+using BCrypt.Net;
+
 
 namespace Master.Services
 {
@@ -22,54 +24,6 @@ namespace Master.Services
 
         #endregion
 
-        #region Private Methods
-
-        private static string GenerateJwtToken(string userId, string userName, string userRole)
-        {
-            var data = Encoding.UTF8.GetBytes("JsonWebToken@123");
-            var securityKey = new Microsoft.IdentityModel.Tokens.SymmetricSecurityKey(data);
-
-            var claims = new Dictionary<string, object>
-            {
-                [ClaimTypes.Name] = userName,
-                [ClaimTypes.GroupSid] = userRole,
-                [ClaimTypes.Sid] = userId
-            };
-            var descriptor = new Microsoft.IdentityModel.Tokens.SecurityTokenDescriptor
-            {
-                Issuer = "MyIssuer",
-                Audience = "MyAudience",
-                Claims = claims,
-                IssuedAt = null,
-                NotBefore = DateTime.UtcNow,
-                Expires = DateTime.UtcNow.AddMinutes(120),
-                SigningCredentials = new Microsoft.IdentityModel.Tokens.SigningCredentials(securityKey, Microsoft.IdentityModel.Tokens.SecurityAlgorithms.HmacSha256Signature)
-            };
-
-            var handler = new Microsoft.IdentityModel.JsonWebTokens.JsonWebTokenHandler();
-            handler.SetDefaultTimesOnTokenCreation = false;
-            var tokenString = handler.CreateToken(descriptor);
-            return tokenString;
-        }
-        private static bool VerifyPassword(string inputPassword, string hashedPassword)
-        {
-            return BCrypt.Net.BCrypt.Verify(inputPassword, hashedPassword);
-        }
-
-        public static string Base64Encode(string? plainText, bool EncodeRequired)
-        {
-            if (EncodeRequired)
-            {
-                var plainTextBytes = System.Text.Encoding.UTF8.GetBytes(plainText);
-                return System.Convert.ToBase64String(plainTextBytes);
-            }
-            else
-            {
-                return plainText;
-            }
-        }
-        #endregion
-
         #region Public Methods
 
 
@@ -78,7 +32,7 @@ namespace Master.Services
             var output = new OperationStatus();
             try
             {
-                var password = Base64Encode(input.pass_word,true);
+                var password = Common.Authentication.HashPassword(input.pass_word);
                 input.pass_word = password;
                 output = await _repository.RegisterUserAsync(input);
             }
@@ -90,12 +44,12 @@ namespace Master.Services
             return output;
         }
 
-        public async Task<OperationStatus> LoginUser(SessionInfo sessionInfo, string userID, string userPassword)
+        public async Task<OperationStatus<string>> LoginUser(SessionInfo sessionInfo, string userID, string userPassword)
         {
-            var output = new OperationStatus();
+            var output = new OperationStatus<string>();
             try
             {
-                OperationStatus result = await _repository.LoginUserAsync(userID, userPassword);
+                OperationStatus<UserObject> result = await _repository.LoginUserAsync(userID, userPassword);
 
                 if (result.Data == null)
                 {
@@ -104,8 +58,8 @@ namespace Master.Services
                 }
                 else
                 {
-                    UserObject user = (UserObject)result.Data;
-                    if (!VerifyPassword(userPassword, user.pass_word))
+                    UserObject user = result.Data;
+                    if (!Common.Authentication.VerifyPassword(userPassword, user.pass_word))
                     {
                         output.IsSuccess = false;
                         output.Message = "Invalid username or password";
@@ -113,7 +67,7 @@ namespace Master.Services
                     else
                     {
                         // Generate JWT
-                        var token = GenerateJwtToken(user.usr_id, user.usr_name, user.usr_role);
+                        var token = Common.Authentication.GenerateJwtToken(user.usr_id, user.usr_name, user.usr_role);
                         output.IsSuccess = true;
                         output.Message = "Login successful";
                         output.Data = token;

@@ -5,8 +5,8 @@ using Master.Core;
 
 namespace Master.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class ProductController : BaseController
     {
         #region Private Elements

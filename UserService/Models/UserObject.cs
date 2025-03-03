@@ -22,6 +22,12 @@
     {
         public bool IsSuccess { get; set; }
         public string Message { get; set; }
-        public Object? Data { get; set; }
+    }
+
+    public class OperationStatus<T>
+    {
+        public bool IsSuccess { get; set; }
+        public string Message { get; set; }
+        public T Data { get; set; }
     }
 }

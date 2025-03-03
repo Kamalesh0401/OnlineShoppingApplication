@@ -1,0 +1,8 @@
+{
+  "DownstreamPathTemplate": "/Price/{everything}",
+  "DownstreamScheme": "https",
+  "ServiceName": "PriceService",
+  "SwaggerKey": "PriceService",
+  "UpstreamPathTemplate": "/price-gate/{everything}",
+  "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
+}
