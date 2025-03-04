@@ -28,15 +28,4 @@
 
     }
 
-    public class SessionInfo
-    {
-        public string MachineID { get; set; }
-        public string BrowserInfo { get; set; }
-    }
-
-    public class OperationStatus
-    {
-        public bool IsSuccess { get; set; }
-        public string Message { get; set; }
-    }
 }

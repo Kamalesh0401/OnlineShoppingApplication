@@ -10,9 +10,9 @@ namespace Common
 {
     public class Authentication
     {
-        private static string secretKey = "JsonWebTokenTestAdminUser@123456789"; // Same secret key used for signing the token
-        private static string issuer = "MyIssuer";
-        private static string audience = "MyAudience";
+        private readonly static string secretKey = "JsonWebTokenTestAdminUser@123456789"; // Same secret key used for signing the token
+        private readonly static string issuer = "MyIssuer";
+        private readonly static string audience = "MyAudience";
 
         // Method to generate JWT Token
         public static string GenerateJwtToken(string userId, string userName, string userRole)
@@ -23,7 +23,7 @@ namespace Common
             var claims = new Dictionary<string, object>
             {
                 [ClaimTypes.Name] = userName,
-                [ClaimTypes.GroupSid] = userRole,
+                [ClaimTypes.Role] = userRole,
                 [ClaimTypes.Sid] = userId
             };
 

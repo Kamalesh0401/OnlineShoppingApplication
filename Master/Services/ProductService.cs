@@ -1,28 +1,27 @@
 ﻿using Master.Models;
+using Common.Models;
 using Master.Services.Data;
 using Master.Services.Interfaces;
 using System.Data;
+using Common.Logging;
 
 namespace Master.Services
 {
     public class ProductService : IProductService
     {
         #region Constructor
-        //public ProductService(IServiceProvider serviceProvider, ILogger<ProductService> logger) { }
-
         private readonly IProductRepository _repository;
-
-        public ProductService(IProductRepository repository)
+        private readonly ILogger<ProductService> _logger;
+        public ProductService(IProductRepository repository, ILogger<ProductService> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
+
 
         #endregion
 
         #region Private Methods
-
-
-
 
 
         #endregion
@@ -35,10 +34,11 @@ namespace Master.Services
             try
             {
                 output = await _repository.GetAllProductsAsync(input);
+                //LogHelper.LogInformation(_logger, "Get all products service", input);
             }
             catch (Exception ex)
             {
-                //this.Logger.LogError(ex, $"Session Info: {sessionInfo.ToJsonText()}, Input : {input.ToJsonText()}");
+                LogHelper.LogError(_logger, ex, $"Session Info: , Input :");
 
             }
             return output;
@@ -103,12 +103,12 @@ namespace Master.Services
             }
             return output;
         }
-        public async Task<OperationStatus> DeleteProductById (SessionInfo sessionInfo, ProductObject input)
+        public async Task<OperationStatus> DeleteProductById(SessionInfo sessionInfo, string prod_id)
         {
             var output = new OperationStatus();
             try
             {
-                output = await _repository.DeleteProductByIdAsync(input);
+                output = await _repository.DeleteProductByIdAsync(prod_id);
             }
             catch (Exception ex)
             {

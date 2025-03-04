@@ -1,5 +1,5 @@
-﻿// IProductRepository.cs
-using Master.Models;
+﻿using Master.Models;
+using Common.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -12,6 +12,6 @@ namespace Master.Services.Data
         Task<List<ProductObject>> GetProductsByCategoryIdAsync(ProductInputObject input);
         Task<OperationStatus> AddProductAsync(ProductObject input);
         Task<OperationStatus> UpdateProductByIdAsync(ProductObject input);
-        Task<OperationStatus> DeleteProductByIdAsync(ProductObject input);
+        Task<OperationStatus> DeleteProductByIdAsync(string prod_id);
     }
 }

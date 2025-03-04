@@ -1,4 +1,5 @@
 ﻿using Master.Models;
+using Common.Models;
 using Master.Services.Data;
 using Master.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
@@ -13,7 +14,7 @@ namespace Master.Services
     public class UserService : IUserService
     {
         #region Constructor
-        //public ProductService(IServiceProvider serviceProvider, ILogger<ProductService> logger) { }
+        //public UserService(IServiceProvider serviceProvider, ILogger<ProductService> logger) { }
 
         private readonly IUserRepository _repository;
 
@@ -27,14 +28,13 @@ namespace Master.Services
         #region Public Methods
 
 
-        public async Task<OperationStatus> RegisterUser(SessionInfo sessionInfo, UserObject input)
+        public async Task<OperationStatus> RegisterUser(SessionInfo sessionInfo, string usr_id, string usr_name, string email, string pass_word, string usr_role)
         {
             var output = new OperationStatus();
             try
             {
-                var password = Common.Authentication.HashPassword(input.pass_word);
-                input.pass_word = password;
-                output = await _repository.RegisterUserAsync(input);
+                pass_word = Common.Authentication.HashPassword(pass_word);
+                output = await _repository.RegisterUserAsync(usr_id, usr_name, email, pass_word, usr_role);
             }
             catch (Exception ex)
             {

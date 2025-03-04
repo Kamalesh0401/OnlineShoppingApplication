@@ -1,4 +1,5 @@
 ﻿using Master.Models;
+using Common.Models;
 using Master.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -110,7 +111,7 @@ namespace Master.Services.Data
             return output;
         }
 
-        public async Task<OperationStatus> DeleteProductByIdAsync(ProductObject input)
+        public async Task<OperationStatus> DeleteProductByIdAsync(string prod_id)
         {
             var output = new OperationStatus();
             try
@@ -118,7 +119,7 @@ namespace Master.Services.Data
                 using (var connection = new SqlConnection(_connectionString))
                 {
                     string sql = @"DELETE FROM prod_dtls WHERE prod_id = @prod_id;";
-                    int rowsAffected = await connection.ExecuteAsync(sql, input);
+                    int rowsAffected = await connection.ExecuteAsync(sql, prod_id);
 
                     output.IsSuccess = true;
                     output.Message = "Data saved successfully";

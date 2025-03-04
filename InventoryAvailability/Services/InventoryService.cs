@@ -1,4 +1,5 @@
 ﻿using Master.Models;
+using Common.Models;
 using Master.Services.Data;
 using Master.Services.Interfaces;
 using System.Data;

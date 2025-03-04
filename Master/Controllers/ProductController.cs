@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Master.Services.Interfaces;
 using Master.Models;
-using Master.Core;
+using Common.Models;
+using Common.Core;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Master.Controllers
 {
@@ -38,20 +40,23 @@ namespace Master.Controllers
         {
             return await this._service.GetProductsByCategoryId(this.GetSessionInfo(), input).ConfigureAwait(false);
         }
+        [Authorize(Roles = "admin")]
         [HttpPost("AddProduct")]
         public async Task<OperationStatus> AddProduct([FromBody] ProductObject input)
         {
             return await this._service.AddProduct(this.GetSessionInfo(), input).ConfigureAwait(false);
         }
-        [HttpPost("UpdateProductById")]
+        [Authorize(Roles = "admin")]
+        [HttpPut("UpdateProductById")]
         public async Task<OperationStatus> UpdateProductById([FromBody] ProductObject input)
         {
             return await this._service.UpdateProductById(this.GetSessionInfo(), input).ConfigureAwait(false);
         }
-        [HttpPost("DeleteProductById")]
-        public async Task<OperationStatus> DeleteProductById([FromBody] ProductObject input)
+        [Authorize(Roles = "admin")]
+        [HttpDelete("DeleteProductById")]
+        public async Task<OperationStatus> DeleteProductById(string prod_id)
         {
-            return await this._service.DeleteProductById(this.GetSessionInfo(), input).ConfigureAwait(false);
+            return await this._service.DeleteProductById(this.GetSessionInfo(), prod_id).ConfigureAwait(false);
         }
     }
 }

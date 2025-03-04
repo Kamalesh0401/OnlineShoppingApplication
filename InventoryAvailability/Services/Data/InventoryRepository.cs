@@ -1,4 +1,5 @@
 ﻿using Master.Models;
+using Common.Models;
 using Master.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;

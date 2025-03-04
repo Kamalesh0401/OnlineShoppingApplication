@@ -1,4 +1,5 @@
 ﻿using Master.Models;
+using Common.Models;
 using Master.Services.Interfaces;
 using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
@@ -17,7 +18,7 @@ namespace Master.Services.Data
             _connectionString = configuration.GetConnectionString("DefaultConnection");
         }
 
-        public async Task<OperationStatus> RegisterUserAsync(UserObject input)
+        public async Task<OperationStatus> RegisterUserAsync(string usr_id, string usr_name, string email, string pass_word, string usr_role)
         {
             var output = new OperationStatus();
 
@@ -28,7 +29,7 @@ namespace Master.Services.Data
                     // Replace with your actual SQL query and parameters
                     string sql = @"INSERT INTO user_dtls(usr_id,usr_name,email,pass_word,usr_role,created_at)
                                VALUES(@usr_id,@usr_name,@email,@pass_word,@usr_role,GETDATE())";
-                    int rowsAffected = await connection.ExecuteAsync(sql, input);
+                    _ = await connection.ExecuteAsync(sql, new { usr_id, usr_name, email, pass_word, usr_role });
 
                     output.IsSuccess = true;
                     output.Message = "Register user successfully";

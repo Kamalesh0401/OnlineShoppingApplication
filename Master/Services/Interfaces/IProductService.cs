@@ -1,4 +1,5 @@
 ﻿using Master.Models;
+using Common.Models;
 using System.Collections.Generic;
 
 namespace Master.Services.Interfaces
@@ -10,6 +11,6 @@ namespace Master.Services.Interfaces
         Task<List<ProductObject>> GetProductsByCategoryId(SessionInfo sessionInfo, ProductInputObject input);
         Task<OperationStatus> AddProduct(SessionInfo sessionInfo, ProductObject input);
         Task<OperationStatus> UpdateProductById(SessionInfo sessionInfo, ProductObject input);
-        Task<OperationStatus> DeleteProductById(SessionInfo sessionInfo, ProductObject input);
+        Task<OperationStatus> DeleteProductById(SessionInfo sessionInfo, string prod_id);
     }
 }

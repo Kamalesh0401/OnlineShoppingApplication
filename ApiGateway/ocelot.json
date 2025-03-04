@@ -2,8 +2,8 @@
   "Routes": [
     {
       "Name": "Product Service",
-      "Summary": "Get All Products",
-      "DownstreamPathTemplate": "/api/Product/GetAllProducts",
+      "Summary": "Product Informations",
+      "DownstreamPathTemplate": "/api/Product/{everything}",
       "DownstreamScheme": "https",
       "DownstreamHostAndPorts": [
         {
@@ -11,78 +11,8 @@
           "Port": 7001
         }
       ],
-      "UpstreamPathTemplate": "/gateway/products/GetAllProducts",
-      "UpstreamHttpMethod": [ "Get" ]
-    },
-    {
-      "Name": "Product Service",
-      "Summary": "Get Products By Id",
-      "DownstreamPathTemplate": "/api/Product/GetProductsById",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7001
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/products/GetProductsById",
-      "UpstreamHttpMethod": [ "Get" ]
-    },
-    {
-      "Name": "Product Service",
-      "Summary": "Get Products By Category",
-      "DownstreamPathTemplate": "/api/Product/GetProductsByCategoryId",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7001
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/products/GetProductsByCategoryId",
-      "UpstreamHttpMethod": [ "Get" ]
-    },
-    {
-      "Name": "Product Service",
-      "Summary": "Add Products",
-      "DownstreamPathTemplate": "/api/Product/AddProduct",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7001
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/products/AddProduct",
-      "UpstreamHttpMethod": [ "Post" ]
-    },
-    {
-      "Name": "Product Service",
-      "Summary": "Update Products",
-      "DownstreamPathTemplate": "/api/Product/UpdateProductById",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7001
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/products/UpdateProductById",
-      "UpstreamHttpMethod": [ "Put" ]
-    },
-    {
-      "Name": "Product Service",
-      "Summary": "Delete Products",
-      "DownstreamPathTemplate": "/api/Product/DeleteProductById",
-      "DownstreamScheme": "https",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "localhost",
-          "Port": 7001
-        }
-      ],
-      "UpstreamPathTemplate": "/gateway/products/DeleteProductById",
-      "UpstreamHttpMethod": [ "Delete" ]
+      "UpstreamPathTemplate": "/gateway/products/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete" ]
     },
     {
       "Name": "Inventory Service",
@@ -110,6 +40,21 @@
         }
       ],
       "UpstreamPathTemplate": "/gateway/price/{everything}",
+      "UpstreamHttpMethod": [ "Get", "Post" ],
+      "DangerousAcceptAnyServerCertificateValidator": true
+    },
+    {
+      "Name": "User Service",
+      "Summary": "User Login and Register",
+      "DownstreamPathTemplate": "/api/user/{everything}",
+      "DownstreamScheme": "https",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7233
+        }
+      ],
+      "UpstreamPathTemplate": "/gateway/user/{everything}",
       "UpstreamHttpMethod": [ "Get", "Post" ],
       "DangerousAcceptAnyServerCertificateValidator": true
     }

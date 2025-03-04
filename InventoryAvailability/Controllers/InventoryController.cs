@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Master.Services.Interfaces;
 using Master.Models;
-using Master.Core;
-
+using Common.Models;
+using Common.Core;
 namespace Master.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("[controller]")]
     public class InventoryController : BaseController
     {
         #region Private Elements
@@ -23,18 +23,18 @@ namespace Master.Controllers
         }
         #endregion
 
-        
+
         [HttpGet("GetAvailabilityByProductId")]
         public async Task<List<InventoryObject>> GetAvailabilityByProductId([FromQuery] InventoryInputObject input)
         {
             return await this._service.GetAvailabilityByProductId(this.GetSessionInfo(), input).ConfigureAwait(false);
         }
-        
+
         [HttpPost("UpdateAvailabilityByProductId")]
         public async Task<OperationStatus> UpdateAvailabilityByProductId([FromBody] InventoryObject input)
         {
             return await this._service.UpdateAvailabilityByProductId(this.GetSessionInfo(), input).ConfigureAwait(false);
         }
-        
+
     }
 }

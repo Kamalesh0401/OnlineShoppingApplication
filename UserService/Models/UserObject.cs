@@ -12,22 +12,4 @@
 
     }
 
-    public class SessionInfo
-    {
-        public string MachineID { get; set; }
-        public string BrowserInfo { get; set; }
-    }
-
-    public class OperationStatus
-    {
-        public bool IsSuccess { get; set; }
-        public string Message { get; set; }
-    }
-
-    public class OperationStatus<T>
-    {
-        public bool IsSuccess { get; set; }
-        public string Message { get; set; }
-        public T Data { get; set; }
-    }
 }
