@@ -4,7 +4,8 @@ using Master.Services.Data;
 using Master.Services.Interfaces;
 using System.Data;
 using Common.Logging;
-
+using Serilog;
+using System.Text.Json;
 namespace Master.Services
 {
     public class ProductService : IProductService
@@ -34,12 +35,10 @@ namespace Master.Services
             try
             {
                 output = await _repository.GetAllProductsAsync(input);
-                //LogHelper.LogInformation(_logger, "Get all products service", input);
             }
             catch (Exception ex)
             {
-                LogHelper.LogError(_logger, ex, $"Session Info: , Input :");
-
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(input)}");
             }
             return output;
         }
@@ -109,11 +108,17 @@ namespace Master.Services
             try
             {
                 output = await _repository.DeleteProductByIdAsync(prod_id);
+                if (!output.IsSuccess)
+                {
+                    LogHelper.LogError(_logger, JsonSerializer.Deserialize<Exception>(output.Message), "Error in Query Executing", prod_id);
+                }
+
             }
             catch (Exception ex)
             {
                 output.IsSuccess = false;
                 output.Message = "Something went wrong";
+                LogHelper.LogError(_logger, ex, $"Session Info: , Input :");
             }
             return output;
         }

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using Dapper;
+using System.Text.Json;
 
 namespace Master.Services.Data
 {
@@ -20,6 +21,7 @@ namespace Master.Services.Data
 
         public async Task<List<ProductObject>> GetAllProductsAsync(ProductInputObject input)
         {
+
             using (var connection = new SqlConnection(_connectionString))
             {
                 string sql = @"SELECT prod.prod_id,prod_name,brand,prod_desc,prod.ctgry_id,ctgry.ctgry_name,prod.mod_by_usr_cd,prod.mod_dttm,
@@ -82,8 +84,7 @@ namespace Master.Services.Data
             catch (Exception ex)
             {
                 output.IsSuccess = false;
-                output.Message = "Something went wrong";
-
+                output.Message = JsonSerializer.Serialize(ex);
             }
             return output;
         }
@@ -105,8 +106,7 @@ namespace Master.Services.Data
             catch (Exception ex)
             {
                 output.IsSuccess = false;
-                output.Message = "Something went wrong";
-
+                output.Message = JsonSerializer.Serialize(ex);
             }
             return output;
         }
@@ -123,20 +123,15 @@ namespace Master.Services.Data
 
                     output.IsSuccess = true;
                     output.Message = "Data saved successfully";
-
-                    return output;
                 }
             }
             catch (Exception ex)
             {
                 output.IsSuccess = false;
-                output.Message = "Something went wrong";
+                output.Message = JsonSerializer.Serialize(ex);
 
             }
             return output;
-
-
-
         }
 
     }

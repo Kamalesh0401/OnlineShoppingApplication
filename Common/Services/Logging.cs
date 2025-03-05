@@ -9,9 +9,16 @@ namespace Common.Logging
 {
     public static class LogHelper
     {
-        public static void LogInformation<T>(ILogger<T> logger, string message, params object[] args)
+        public static void LogInformation<T>(ILogger<T> logger, string message, params object?[] args)
         {
-            logger.LogInformation(message, args);
+            try
+            {
+                logger.LogInformation(message, args);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error logging information: {ex}");
+            }
         }
 
         public static void LogWarning<T>(ILogger<T> logger, string message, params object[] args)

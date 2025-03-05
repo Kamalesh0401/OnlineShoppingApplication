@@ -68,10 +68,12 @@ builder.Services.AddSwaggerGen(options =>
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Information()
     .Enrich.WithProperty("Service", "ProductService") // Add service identifier
-    .WriteTo.File("logs/ProductService-.log", rollingInterval: RollingInterval.Day) // Add file sink
+    .WriteTo.File("logs/InventoryService-.log", rollingInterval: RollingInterval.Day) // Add file sink
     .CreateLogger();
 
 Serilog.Log.Information("Configuring web host ...");
+
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 

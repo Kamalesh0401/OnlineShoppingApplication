@@ -78,6 +78,7 @@ Log.Logger = new LoggerConfiguration()
 
 Serilog.Log.Information("Configuring web host ...");
 
+builder.Host.UseSerilog();
 
 var app = builder.Build();
 
