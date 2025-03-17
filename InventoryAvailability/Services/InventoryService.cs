@@ -3,19 +3,20 @@ using Common.Models;
 using Master.Services.Data;
 using Master.Services.Interfaces;
 using System.Data;
+using System.Text.Json;
+using Common.Logging;
 
 namespace Master.Services
 {
     public class InventoryService : IInventoryService
     {
-        #region Constructor
-        //public ProductService(IServiceProvider serviceProvider, ILogger<ProductService> logger) { }
-
         private readonly IInventoryRepository _repository;
-
-        public InventoryService(IInventoryRepository repository)
+        private readonly ILogger<InventoryService> _logger;
+        #region Constructor
+        public InventoryService(IInventoryRepository repository, ILogger<InventoryService> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         #endregion
@@ -32,12 +33,11 @@ namespace Master.Services
             }
             catch (Exception ex)
             {
-                //this.Logger.LogError(ex, $"Session Info: {sessionInfo.ToJsonText()}, Input : {input.ToJsonText()}");
-
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(input)}");
             }
             return output;
         }
-     
+
         public async Task<OperationStatus> UpdateAvailabilityByProductId(SessionInfo sessionInfo, InventoryObject input)
         {
             var output = new OperationStatus();
@@ -49,10 +49,11 @@ namespace Master.Services
             {
                 output.IsSuccess = false;
                 output.Message = "Something went wrong";
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(input)}");
             }
             return output;
         }
-       
+
         #endregion
 
     }

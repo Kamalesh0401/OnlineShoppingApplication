@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Master.Services.Interfaces;
 using Master.Models;
+using Common.Models;
 using Master.Core;
 
 namespace Master.Controllers

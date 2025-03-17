@@ -1,5 +1,5 @@
-﻿// IProductRepository.cs
-using Master.Models;
+﻿using Master.Models;
+using Common.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

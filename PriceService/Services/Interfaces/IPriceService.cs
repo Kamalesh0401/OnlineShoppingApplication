@@ -1,4 +1,5 @@
 ﻿using Master.Models;
+using Common.Models;
 using System.Collections.Generic;
 
 namespace Master.Services.Interfaces

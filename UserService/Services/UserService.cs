@@ -7,20 +7,23 @@ using System.Data;
 using System.Security.Claims;
 using System.Text;
 using BCrypt.Net;
+using System.Text.Json;
+using Common.Logging;
 
 
 namespace Master.Services
 {
     public class UserService : IUserService
     {
+
         #region Constructor
-        //public UserService(IServiceProvider serviceProvider, ILogger<ProductService> logger) { }
 
         private readonly IUserRepository _repository;
-
-        public UserService(IUserRepository repository)
+        private readonly ILogger<UserService> _logger;
+        public UserService(IUserRepository repository, ILogger<UserService> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         #endregion
@@ -38,7 +41,7 @@ namespace Master.Services
             }
             catch (Exception ex)
             {
-                //this.Logger.LogError(ex, $"Session Info: {sessionInfo.ToJsonText()}, Input : {input.ToJsonText()}");
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(new { usr_name, email, usr_role })}");
 
             }
             return output;
@@ -78,6 +81,7 @@ namespace Master.Services
             {
                 output.IsSuccess = false;
                 output.Message = "Something went wrong";
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(new { userPassword, userID })}");
             }
             return output;
         }

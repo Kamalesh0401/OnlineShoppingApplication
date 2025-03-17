@@ -1,20 +1,23 @@
-﻿using Master.Models;
+﻿using Common.Logging;
+using Common.Models;
+using Master.Models;
 using Master.Services.Data;
 using Master.Services.Interfaces;
 using System.Data;
+using System.Text.Json;
 
 namespace Master.Services
 {
     public class PriceService : IPriceService
     {
         #region Constructor
-        //public ProductService(IServiceProvider serviceProvider, ILogger<ProductService> logger) { }
 
         private readonly IPriceRepository _repository;
-
-        public PriceService(IPriceRepository repository)
+        private readonly ILogger<PriceService> _logger;
+        public PriceService(IPriceRepository repository, ILogger<PriceService> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         #endregion
@@ -31,12 +34,12 @@ namespace Master.Services
             }
             catch (Exception ex)
             {
-                //this.Logger.LogError(ex, $"Session Info: {sessionInfo.ToJsonText()}, Input : {input.ToJsonText()}");
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(input)}");
 
             }
             return output;
         }
-     
+
         public async Task<OperationStatus> UpdatePriceByProductId(SessionInfo sessionInfo, PriceUpdateObject input)
         {
             var output = new OperationStatus();
@@ -48,10 +51,11 @@ namespace Master.Services
             {
                 output.IsSuccess = false;
                 output.Message = "Something went wrong";
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(input)}");
             }
             return output;
         }
-       
+
         #endregion
 
     }

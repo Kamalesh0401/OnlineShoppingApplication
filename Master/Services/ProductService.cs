@@ -52,7 +52,7 @@ namespace Master.Services
             }
             catch (Exception ex)
             {
-                //this.Logger.LogError(ex, $"Session Info: {sessionInfo.ToJsonText()}, Input : {input.ToJsonText()}");
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(input)}");
 
             }
             return output;
@@ -67,7 +67,7 @@ namespace Master.Services
             }
             catch (Exception ex)
             {
-                //this.Logger.LogError(ex, $"Session Info: {sessionInfo.ToJsonText()}, Input : {input.ToJsonText()}");
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(input)}");
 
             }
             return output;
@@ -84,6 +84,7 @@ namespace Master.Services
             {
                 output.IsSuccess = false;
                 output.Message = "Something went wrong";
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(input)}");
             }
             return output;
         }
@@ -99,6 +100,7 @@ namespace Master.Services
             {
                 output.IsSuccess = false;
                 output.Message = "Something went wrong";
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(input)}");
             }
             return output;
         }
@@ -118,7 +120,7 @@ namespace Master.Services
             {
                 output.IsSuccess = false;
                 output.Message = "Something went wrong";
-                LogHelper.LogError(_logger, ex, $"Session Info: , Input :");
+                LogHelper.LogError(_logger, ex, $"Session Info: {sessionInfo?.UserID}, Input :{JsonSerializer.Serialize(prod_id)}");
             }
             return output;
         }
