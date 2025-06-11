@@ -24,12 +24,16 @@ namespace Master.Services.Data
 
             using (var connection = new SqlConnection(_connectionString))
             {
-                string sql = @"SELECT prod.prod_id,prod_name,brand,prod_desc,prod.ctgry_id,ctgry.ctgry_name,prod.mod_by_usr_cd,prod.mod_dttm,
+                string sql = $@"SELECT prod.prod_id,prod_name,brand,prod_desc,prod.ctgry_id,ctgry.ctgry_name,prod.mod_by_usr_cd,prod.mod_dttm,
                                 price.price, price.currency,invntry.stock_aval FROM prod_dtls prod
                                 INNER JOIN prod_ctgry_mast ctgry ON ctgry.ctgry_id = prod.ctgry_id
                                 INNER JOIN prod_price_dtls price ON price.prod_id = prod.prod_id
-                                INNER JOIN invntry_dtls invntry ON invntry.prod_id = prod.prod_id;";
-                return (await connection.QueryAsync<ProductObject>(sql)).AsList();
+                                INNER JOIN invntry_dtls invntry ON invntry.prod_id = prod.prod_id WHERE prod_name LIKE @prod_name_search;";
+
+                // Prepare the parameter value with wildcards
+                var searchParam = $"%{input.prod_name}%";
+
+                return (await connection.QueryAsync<ProductObject>(sql, new { prod_name_search = searchParam })).AsList();
             }
         }
 
@@ -43,8 +47,7 @@ namespace Master.Services.Data
                                 INNER JOIN prod_ctgry_mast ctgry ON ctgry.ctgry_id = prod.ctgry_id
                                 INNER JOIN prod_price_dtls price ON price.prod_id = prod.prod_id
                                 INNER JOIN invntry_dtls invntry ON invntry.prod_id = prod.prod_id
-                                WHERE prod.prod_id = @prod_id;
-";
+                                WHERE prod.prod_id = @prod_id;";
                 return (await connection.QueryAsync<ProductObject>(sql, new { input.prod_id })).AsList();
             }
         }

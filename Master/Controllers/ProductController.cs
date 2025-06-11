@@ -25,8 +25,8 @@ namespace Master.Controllers
         }
         #endregion
 
-        [HttpGet("GetAllProducts")]
-        public async Task<List<ProductObject>> GetAllProduct([FromQuery] ProductInputObject input)
+        [HttpPost("GetAllProducts")]
+        public async Task<List<ProductObject>> GetAllProduct([FromBody] ProductInputObject input)
         {
             return await this._service.GetAllProduct(this.GetSessionInfo(), input).ConfigureAwait(false);
         }
